@@ -2,5 +2,7 @@
 #
 .idea/
 
-
+#
+*.json
+*.ipynb_checkpoints
 
