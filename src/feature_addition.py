@@ -28,6 +28,16 @@ def get_name_from_data(data: dict, name: str):
     return data[name].capitalize()
 
 
+def calculate_co2_in_trip(trip):
+    round_to = 2
+    # TODO update formula later
+    activity = trip["activity_type"]
+    distance = trip["distance"]
+    duration = trip["duration"]
+
+    return round(distance / 1000 * ACTIVITY_DICT[activity], round_to)
+
+
 def get_co2_absolute_from_data(data: dict, name: str, month: str):
     year = 2023
     month_str = f"{year}_{month}"
@@ -35,11 +45,7 @@ def get_co2_absolute_from_data(data: dict, name: str, month: str):
     user_data = data[name][month_str]
     absolute_co2 = 0
     for trip in user_data["raw"]:
-        activity = trip["activity_type"]
-        duration = trip["duration"]
-        distance = trip["distance"]
-        # TODO update formula later
-        absolute_co2 += distance / 1000 * ACTIVITY_DICT[activity]
+        absolute_co2 += calculate_co2_in_trip(trip)
 
     data[name][month_str]["features"]["co2_absolute"] = absolute_co2
     return absolute_co2
@@ -52,13 +58,9 @@ def get_co2_average_from_data(data: dict, name: str, month: str):
     user_data = data[name][month_str]
     absolute_co2 = 0
     for trip in user_data["raw"]:
-        activity = trip["activity_type"]
-        duration = trip["duration"]
-        distance = trip["distance"]
-        # TODO update formula later
-        absolute_co2 += distance / 1000 * ACTIVITY_DICT[activity]
+        absolute_co2 += calculate_co2_in_trip(trip)
 
-    average_trip_co2 = absolute_co2 / len(user_data["raw"])
+    average_trip_co2 = round(absolute_co2 / len(user_data["raw"]), 2)
     data[name][month_str]["features"]["co2_absolute"] = average_trip_co2
     return average_trip_co2
 
@@ -75,13 +77,12 @@ def generate_all_endpoint_data(data):
             data[user_name][month_data]["features"]["all_end_locations"] = all_end_locations
 
 
-def get_all_end_locations(data:dict, name:str, month:str):
+def get_all_end_locations(data: dict, name: str, month: str):
     year = 2023
     return data[name][f"{year}_{month}"]["features"]["all_end_locations"]
 
 
-def get_friend_rank(data:dict, name:str, month:str):
-
+def get_friend_rank(data: dict, name: str, month: str):
     co2_for_all_users = {}
 
     for names in data:
@@ -95,7 +96,7 @@ def get_friend_rank(data:dict, name:str, month:str):
         if item[0] == name:
             break
 
-    return rank+1
+    return rank + 1
 
 
 def get_co2_footprint_per_day(user_name, month, data):
@@ -111,9 +112,7 @@ def get_co2_footprint_per_day(user_name, month, data):
         start_date = str(parser.parse(trip["start_time"]).date())
         # check not mandatory, but just for safety
         if start_date in days_co2_arr:
-            activity = trip["activity_type"]
-            distance = trip["distance"]
-            days_co2_arr[str(start_date)] += distance / 1000 * ACTIVITY_DICT[activity]
+            days_co2_arr[str(start_date)] += calculate_co2_in_trip(trip)
 
     data[user_name][month_str]["features"]["day_of_month_co2"] = days_co2_arr
     return days_co2_arr

@@ -23,7 +23,6 @@ def default():
             "Description": "Implement eco-friendly route API"}
 
 
-
 @app.get("/get-timeline-data")
 def calculate_carbon_footprint(month: str, name: str):
     # TODO: Add code to calculate carbon footprint and return response
@@ -35,7 +34,7 @@ def calculate_carbon_footprint(month: str, name: str):
         "trip_destinations": get_all_end_locations(data=app.state.data, name=name, month=month),
         "co2_footprint_each_day": get_co2_footprint_per_day(data=app.state.data, user_name=name, month=month)
     }
-#
+
 # @app.get("/get-directions")
 # def directions(client, origin, destination,
 #                mode=None, waypoints=None, alternatives=False, avoid=None,
@@ -45,7 +44,7 @@ def calculate_carbon_footprint(month: str, name: str):
 #
 #
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
