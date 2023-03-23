@@ -1,4 +1,8 @@
 import json
+import datetime
+from copy import copy
+
+from dateutil import parser
 
 # grams per km
 # TODO update subway
@@ -58,6 +62,7 @@ def get_co2_average_from_data(data: dict, name: str, month: str):
     data[name][month_str]["features"]["co2_absolute"] = average_trip_co2
     return average_trip_co2
 
+
 def generate_all_endpoint_data(data):
     for user_name in data:
         for month_data in data[user_name]:
@@ -91,3 +96,22 @@ def get_friend_rank(data:dict, name:str, month:str):
             break
 
     return rank+1
+def get_co2_footprint_per_day(user_name, month, data):
+    year = 2023
+    month_str = f"{year}_{month}"
+    month_map = {month_i.lower(): index for index, month_i in enumerate(calendar.month_name) if month_i}
+    month_number = month_map[month.lower()]
+    num_days_in_month = calendar.monthrange(year, month_number)[1]
+    days_co2_arr = {str(datetime.date(year, month_number, day)): 0 for day in range(1, num_days_in_month + 1)}
+
+    # for date, value in days_co2_arr:
+    for trip in data[user_name][month_str]["raw"]:
+        start_date = str(parser.parse(trip["start_time"]).date())
+        # check not mandatory, but just for safety
+        if start_date in days_co2_arr:
+            activity = trip["activity_type"]
+            distance = trip["distance"]
+            days_co2_arr[str(start_date)] += distance / 1000 * ACTIVITY_DICT[activity]
+
+    data[user_name][month_str]["features"]["day_of_month_co2"] = days_co2_arr
+    return days_co2_arr
