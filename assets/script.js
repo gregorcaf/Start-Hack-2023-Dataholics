@@ -64,6 +64,7 @@ function getData() {
         let text_rank
         let text_per_trip
         let text_total_emissions
+        let text_user_better_worse
 
         // rank
         if (rank <= (numPeople / 3)) {
@@ -119,6 +120,9 @@ function getData() {
         document.getElementById("labelEcoFootprintNumber").innerHTML = text_total_emissions
         document.getElementById("labelTotalEmissions").innerHTML = text_total_emissions
         document.getElementById("labelPerTripConsumption").innerHTML = text_per_trip
+
+        // TODO
+        document.getElementById("labelMonthlyComparison").innerHTML = text_user_better_worse
         }
     )
 }
