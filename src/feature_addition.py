@@ -1,5 +1,17 @@
 import json
 
+# grams per km
+# TODO update subway
+ACTIVITY_DICT = {
+    "CYCLING": 21,
+    "IN_BUS": 105,
+    "IN_PASSENGER_VEHICLE": 192,
+    "IN_SUBWAY": 41,
+    "IN_TRAIN": 35,
+    "IN_TRAM": 20.2,
+    "WALKING": 50
+}
+
 def load_data(db_file):
     with open(db_file, "r") as f:
         data = json.load(f)
@@ -11,10 +23,40 @@ def load_data(db_file):
 def get_name_from_data(data: dict, name: str):
     return data[name].capitalize()
 
-def get_co2_absolute_from_data(data:dict, name:str, month:str):
-    user_data = data[name]
-    user_data_for_month = user_data[f"2023_{month}"]["raw"]
 
+def get_co2_absolute_from_data(data: dict, name: str, month: str):
+    year = 2023
+    month_str = f"{year}_{month}"
+
+    user_data = data[name][month_str]
+    absolute_co2 = 0
+    for trip in user_data["raw"]:
+        activity = trip["activity_type"]
+        duration = trip["duration"]
+        distance = trip["distance"]
+        # TODO update formula later
+        absolute_co2 += distance / 1000 * ACTIVITY_DICT[activity]
+
+    data[name][month_str]["features"]["co2_absolute"] = absolute_co2
+    return absolute_co2
+
+
+def get_co2_average_from_data(data: dict, name: str, month: str):
+    year = 2023
+    month_str = f"{year}_{month}"
+
+    user_data = data[name][month_str]
+    absolute_co2 = 0
+    for trip in user_data["raw"]:
+        activity = trip["activity_type"]
+        duration = trip["duration"]
+        distance = trip["distance"]
+        # TODO update formula later
+        absolute_co2 += distance / 1000 * ACTIVITY_DICT[activity]
+
+    average_trip_co2 = absolute_co2 / len(user_data["raw"])
+    data[name][month_str]["features"]["co2_absolute"] = average_trip_co2
+    return average_trip_co2
 
 
 def generate_all_endpoint_data(data):
