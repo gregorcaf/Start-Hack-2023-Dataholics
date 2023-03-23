@@ -210,26 +210,26 @@ function initMap() {
 function calculateCo2(data) {
     // TODO: Change values
     co2_per_km = {
-        "BUS": 101,
+        "BUS": 105,
         "CABLE_CAR": 41,
-        "COMMUTER_TRAIN": 41,
-        "FERRY": 194,
+        "COMMUTER_TRAIN": 35,
+        "FERRY": 19,
         "FUNICULAR": 19,
         "GONDOLA_LIFT": 21,
-        "HEAVY_RAIL": 41,
-        "HIGH_SPEED_TRAIN": 13,
-        "INTERCITY_BUS": 27,
-        "METRO_RAIL": 68,
-        "MONORAIL": 76,
+        "HEAVY_RAIL": 35,
+        "HIGH_SPEED_TRAIN": 6,
+        "INTERCITY_BUS": 105,
+        "METRO_RAIL": 41,
+        "MONORAIL": 41,
         "OTHER": 0,
-        "RAIL": 41,
+        "RAIL": 35,
         "SHARE_TAXI": 101,
-        "SUBWAY": 68,
-        "TRAM": 41,
-        "TROLLEYBUS": 68,
-        "DRIVING": 50,
-        "WALKING": 10,
-        "BICYCLING": 10
+        "SUBWAY": 35,
+        "TRAM": 20.5,
+        "TROLLEYBUS": 21,
+        "DRIVING": 192,
+        "WALKING": 50,
+        "BICYCLING": 21
     }
 
     let co2 = []
@@ -316,15 +316,18 @@ function createRoute() {
 
             let html_els = [];
             let times = [];
+            console.log("all directions ", all_directios)
             for (i = 0; i < all_directios.length; i++) {
                 var dr = new google.maps.DirectionsRenderer({
+                    suppressMarkers: true,
                     polylineOptions: {
                         strokeColor: sorted_col[i]
                     },
                     markerOptions: {
-                        icon: travel_img[i],
-
-                    }
+                        icon: travel_img[i]
+                    },
+                    hideRouteList: true,
+                    suppressBicyclingLayer: true
                 });
                 dr.setDirections(all_directios[i]);
                 dr.setRouteIndex(i);
