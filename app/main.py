@@ -1,8 +1,8 @@
 import uvicorn
 from fastapi import FastAPI
 
-from src.feature_addition import load_data, get_co2_absolute_from_data, get_co2_average_from_data, \
-    generate_all_endpoint_data, get_co2_footprint_per_day, get_friend_rank, get_all_end_locations
+from src.feature_addition import load_data, get_co2_absolute_from_data, get_co2_average_from_data,\
+    get_co2_footprint_per_day, get_friend_rank, get_all_end_locations
 from pathlib import Path
 
 PROJECT_ROOT = (Path(__file__).parents[1])

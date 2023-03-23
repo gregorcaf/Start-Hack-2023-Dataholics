@@ -17,6 +17,15 @@ ACTIVITY_DICT = {"IN_FERRY": 19.2,
 
 
 def load_data(db_file):
+    """
+        Load data from a JSON file.
+
+        Args:
+            db_file (str): path to the JSON file.
+
+        Returns:
+            dict: data loaded from the JSON file.
+        """
     with open(db_file, "r") as f:
         data = json.load(f)
 
@@ -25,6 +34,16 @@ def load_data(db_file):
 
 
 def get_name_from_data(data: dict, name: str):
+    """
+        Get the capitalized name from the data dictionary.
+
+        Args:
+            data (dict): the data dictionary.
+            name (str): the name to capitalize.
+
+        Returns:
+            str: the capitalized name.
+        """
     return data[name].capitalize()
 
 
@@ -39,6 +58,17 @@ def calculate_co2_in_trip(trip):
 
 
 def get_co2_absolute_from_data(data: dict, name: str, month: str):
+    """
+        Calculate the absolute CO2 footprint for a user in a given month.
+
+        Args:
+            data (dict): the data dictionary.
+            name (str): the name of the user.
+            month (str): the month to calculate the CO2 footprint for.
+
+        Returns:
+            str: the calculated absolute CO2 footprint.
+        """
     year = 2023
     month_str = f"{year}_{month}"
 
@@ -52,6 +82,17 @@ def get_co2_absolute_from_data(data: dict, name: str, month: str):
 
 
 def get_co2_average_from_data(data: dict, name: str, month: str):
+    """
+        Calculate the average CO2 footprint per trip for a user in a given month.
+
+        Args:
+            data (dict): the data dictionary.
+            name (str): the name of the user.
+            month (str): the month to calculate the CO2 footprint for.
+
+        Returns:
+            float: the calculated average CO2 footprint per trip.
+        """
     year = 2023
     month_str = f"{year}_{month}"
 
@@ -66,6 +107,12 @@ def get_co2_average_from_data(data: dict, name: str, month: str):
 
 
 def generate_all_endpoint_data(data):
+    """
+        Generate a list of all end locations for each user in each month.
+
+        Args:
+            data (dict): the data dictionary.
+        """
     for user_name in data:
         for month_data in data[user_name]:
             # here we work with a user per month summary
@@ -78,11 +125,33 @@ def generate_all_endpoint_data(data):
 
 
 def get_all_end_locations(data: dict, name: str, month: str):
+    """
+    Get a list of all end locations for a user in a given month.
+
+    Args:
+        data (dict): the data dictionary.
+        name (str): the name of the user.
+        month (str): the month to get the end locations for.
+
+    Returns:
+        list: a list of all end locations for trips of a user in a given month
+        """
     year = 2023
     return data[name][f"{year}_{month}"]["features"]["all_end_locations"]
 
 
-def get_friend_rank(data: dict, name: str, month: str):
+def get_friend_rank(data:dict, name:str, month:str):
+    """
+       Given a dictionary of user data, a user's name, and a month, return the user's rank based on CO2 emissions for that month.
+
+       Parameters:
+       data (dict): A dictionary of user data.
+       name (str): The name of the user.
+       month (str): The month for which to retrieve the CO2 emissions data.
+
+       Returns:
+       int: The user's rank based on CO2 emissions for the specified month.
+       """
     co2_for_all_users = {}
 
     for names in data:
@@ -100,6 +169,17 @@ def get_friend_rank(data: dict, name: str, month: str):
 
 
 def get_co2_footprint_per_day(user_name, month, data):
+    """
+        Given a user's name, a month, and a dictionary of user data, return a dictionary of CO2 emissions for each day of the specified month.
+
+        Parameters:
+        user_name (str): The name of the user.
+        month (str): The month for which to retrieve the CO2 emissions data.
+        data (dict): A dictionary of user data.
+
+        Returns:
+        dict: A dictionary of CO2 emissions for each day of the specified month.
+        """
     year = 2023
     month_str = f"{year}_{month}"
     month_map = {month_i.lower(): index for index, month_i in enumerate(calendar.month_name) if month_i}
