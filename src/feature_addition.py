@@ -165,7 +165,7 @@ def get_friend_rank(data:dict, name:str, month:str):
         if item[0] == name:
             break
 
-    return rank + 1
+    return f"{rank + 1} / {len(co2_for_all_users)}"
 
 
 def get_co2_footprint_per_day(user_name, month, data):
