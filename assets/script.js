@@ -183,9 +183,9 @@ function createRoute() {
             if (percent == 100) {
                 percent = "0%";
             } else if (percent < 100) {
-                percent = `-${100-percent}%`;
+                percent = `-${Math.abs(100-percent)}%`;
             } else {
-                percent = `+${100-percent}%`;
+                percent = `+${Math.abs(100-percent)}%`;
             }
 
             let html_temp = `
