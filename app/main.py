@@ -56,6 +56,7 @@ def calculate_carbon_footprint(month: str, name: str):
 #                transit_routing_preference=None, traffic_model=None):
 #
 #
+# TODO add knn nearest neighbour algorithm to find people who go to similar places at similar times
 
 
 if __name__ == "__main__":

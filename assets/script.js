@@ -30,10 +30,7 @@ function initMap() {
   }
 
   function getData() {
-    // fetch(url).then(response => {
-    //   console.log(response)
-    // })
-    fetch(url, {mode:"no-cors"}).then((response) => console.log(response)) //.then((data) => console.log(data));
+    fetch(url).then((response) => response.json()).then((data) => console.log(data));
   }
 
   let locations = [
