@@ -1,5 +1,8 @@
+import json
+
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from src.feature_addition import load_data, get_co2_absolute_from_data, get_co2_average_from_data,\
     get_co2_footprint_per_day, get_friend_rank, get_all_end_locations
@@ -9,6 +12,16 @@ PROJECT_ROOT = (Path(__file__).parents[1])
 DATA_FILE_PATH = PROJECT_ROOT/"data/prepared_trips/trip_data.json"
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.on_event("startup")
@@ -26,14 +39,14 @@ def default():
 @app.get("/get-timeline-data")
 def calculate_carbon_footprint(month: str, name: str):
     # TODO: Add code to calculate carbon footprint and return response
-    return {
+    return json.dumps({
         "name": name.capitalize(),
         "co2_absolute": get_co2_absolute_from_data(data=app.state.data, name=name, month=month),
         "co2_average": get_co2_average_from_data(data=app.state.data, name=name, month=month),
         "friend_rank": get_friend_rank(data=app.state.data, name=name, month=month),
         "trip_destinations": get_all_end_locations(data=app.state.data, name=name, month=month),
         "co2_footprint_each_day": get_co2_footprint_per_day(data=app.state.data, user_name=name, month=month)
-    }
+    })
 
 # @app.get("/get-directions")
 # def directions(client, origin, destination,

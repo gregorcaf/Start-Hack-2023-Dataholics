@@ -1,3 +1,5 @@
+url = "http://localhost:8000/get-timeline-data?name=zan&month=february"
+
 function initMap() {
     // The location of Uluru
     const uluru = { lat: 48.1370339, lng: 11.5732385 };
@@ -27,6 +29,13 @@ function initMap() {
 
   }
 
+  function getData() {
+    // fetch(url).then(response => {
+    //   console.log(response)
+    // })
+    fetch(url, {mode:"no-cors"}).then((response) => console.log(response)) //.then((data) => console.log(data));
+  }
+
   let locations = [
     {name: 'A', lat: 48.1370339, lng: 11.5732385 },
     {name: 'B', lat: 48.18, lng: 11.578 },
@@ -36,3 +45,4 @@ function initMap() {
   ]
   
   window.initMap = initMap;
+  window.onload = getData;
