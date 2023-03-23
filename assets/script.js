@@ -1,4 +1,4 @@
-let url = "http://localhost:8000/get-timeline-data?name=gordan&month=february"
+let url = "http://localhost:8000/get-timeline-data?name=max&month=february"
 let totalEmissionsLow = 70
 let totalEmissionsHigh = 90
 let perTripConsumptionLow = 1
@@ -30,15 +30,8 @@ function initMap() {
             }
         })(marker, i));
     }
-
 }
 
-// function getData() {
-//   let fetched_data = 0
-//
-//   fetch(url).then((response) => response.json()).then((data) => console.log(data));
-//   console.lo
-// }
 
 function getData() {
     let data;
@@ -54,21 +47,21 @@ function getData() {
             let numPeople = parseInt(data["friend_rank"].split(" / ")[1]);
             let totalEmissions = parseFloat(data["co2_absolute"]) / 1000;
             let perTripConsumption = parseFloat(data["co2_average"]) / 1000;
-            let arrayDays = data["co2_footprint_each_day"]
-            let daysX = []
-            let valuesY = []
+            let arrayDays = data["co2_footprint_each_day"];
+            let daysX = [];
+            let valuesY = [];
 
-            console.log("name ", name)
-            console.log("rank ", rank) // DONE
-            console.log("num people ", numPeople)
-            console.log("total emissions ", totalEmissions) // DONE
-            console.log("per trip consumptions ", perTripConsumption) // DONE
+            console.log("name ", name);
+            console.log("rank ", rank);
+            console.log("num people ", numPeople);
+            console.log("total emissions ", totalEmissions);
+            console.log("per trip consumptions ", perTripConsumption);
             // console.log("array ", arrayDays)
 
             for (var key in arrayDays) {
                 console.log(key + " -> " + arrayDays[key]);
-                daysX.push(key)
-                valuesY.push(arrayDays[key])
+                daysX.push(key);
+                valuesY.push(arrayDays[key]);
             }
 
             var colors = [];
@@ -78,66 +71,80 @@ function getData() {
                 colors.push('rgb(' + red_value + ', ' + green_value + ', 0)');
             }
 
-
-            let text_rank
-            let text_per_trip
-            let text_total_emissions
-            let text_user_better_worse
+            let text_rank;
+            let text_per_trip;
+            let text_total_emissions;
+            let text_user_better_worse;
+            let value_user_better_worse = ((numPeople - rank) / numPeople) * 100
 
             // rank
             if (rank <= (numPeople / 3)) {
-                text_rank = "Munich area leaderboard: <span class=\"badge text-bg-success\">"
+                text_rank = "Munich area leaderboard: <span class=\"badge text-bg-success\">";
             } else if (rank <= (numPeople - numPeople / 3)) {
-                text_rank = "Munich area leaderboard: <span class=\"badge text-bg-warning\">"
+                text_rank = "Munich area leaderboard: <span class=\"badge text-bg-warning\">";
             } else {
-                text_rank = "Munich area leaderboard: <span class=\"badge text-bg-danger\">"
+                text_rank = "Munich area leaderboard: <span class=\"badge text-bg-danger\">";
             }
 
-            text_rank += rank
+            text_rank += rank;
 
             if (rank == 1) {
-                text_rank += "st"
+                text_rank += "st";
 
             } else if (rank == 2) {
-                text_rank += "nd"
+                text_rank += "nd";
             } else if (rank == 3) {
-                text_rank += "rd"
+                text_rank += "rd";
             } else {
-                text_rank += "th"
+                text_rank += "th";
             }
-            text_rank += "</span>"
+
+            text_rank += "</span>";
 
 
             // total emissions
             if (totalEmissions < totalEmissionsLow) {
-                text_total_emissions = "Total emissions: <span class=\"badge text-bg-success\">"
+                text_total_emissions = "Total emissions: <span class=\"badge text-bg-success\">";
             } else if (totalEmissions < totalEmissionsHigh) {
-                text_total_emissions = "Total emissions: <span class=\"badge text-bg-warning\">"
+                text_total_emissions = "Total emissions: <span class=\"badge text-bg-warning\">";
             } else {
-                text_total_emissions = "Total emissions: <span class=\"badge text-bg-danger\">"
+                text_total_emissions = "Total emissions: <span class=\"badge text-bg-danger\">";
             }
 
             text_total_emissions += totalEmissions.toFixed(2);
-            text_total_emissions += " kg</span>"
+            text_total_emissions += " kg</span>";
 
 
             // per trip consumption
             if (perTripConsumption < perTripConsumptionLow) {
-                text_per_trip = "Per trip consumption: <span class=\"badge text-bg-success\">"
+                text_per_trip = "Per trip consumption: <span class=\"badge text-bg-success\">";
             } else if (perTripConsumption < perTripConsumptionHigh) {
-                text_per_trip = "Per trip consumption: <span class=\"badge text-bg-warning\">"
+                text_per_trip = "Per trip consumption: <span class=\"badge text-bg-warning\">";
             } else {
-                text_per_trip = "Per trip consumption: <span class=\"badge text-bg-danger\">"
+                text_per_trip = "Per trip consumption: <span class=\"badge text-bg-danger\">";
             }
 
             text_per_trip += perTripConsumption.toFixed(2);
-            text_per_trip += " kg</span>"
+            text_per_trip += " kg</span>";
+
+
+            // comparison
+            if (rank <= numPeople / rank) {
+                text_user_better_worse = "This month you did better than <span class=\"badge text-bg-success\">"
+                text_user_better_worse += value_user_better_worse.toFixed(2);
+                text_user_better_worse += " %</span> of people in Munich area"
+            } else {
+                text_user_better_worse = "This month you did better than <span class=\"badge text-bg-danger\">"
+                text_user_better_worse += value_user_better_worse.toFixed(2);
+                text_user_better_worse += " %</span> of people in Munich area"
+            }
 
             // change the data in HTML
-            document.getElementById("labelAreaLeaderboard").innerHTML = text_rank
-            document.getElementById("labelEcoFootprintNumber").innerHTML = text_total_emissions
-            document.getElementById("labelTotalEmissions").innerHTML = text_total_emissions
-            document.getElementById("labelPerTripConsumption").innerHTML = text_per_trip
+            document.getElementById("labelAreaLeaderboard").innerHTML = text_rank;
+            document.getElementById("labelEcoFootprintNumber").innerHTML = text_total_emissions;
+            document.getElementById("labelTotalEmissions").innerHTML = text_total_emissions;
+            document.getElementById("labelPerTripConsumption").innerHTML = text_per_trip;
+            document.getElementById("labelMonthlyComparison").innerHTML = text_user_better_worse;
 
             // plotly chart
             var layout = {
