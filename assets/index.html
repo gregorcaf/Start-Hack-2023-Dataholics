@@ -2,6 +2,8 @@
 <html>
 <head>
   <title>Google Maps</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <script src="script.js"></script>
@@ -9,10 +11,10 @@
 </head>
 <body>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-8 min-vh-100" style="background-color: rgba(40, 40, 129, 0.1)">
-                Maps
+    <div class="">
+        <div class="row no-gutters g-0">
+            <div class="col-8 min-vh-100 p-0">
+                <div class="min-vh-100 min-wh-100" id="map"></div>
             </div>
             <div class="col-4 min-vh-100" style="background-color: rgba(65, 129, 40, 0.1)">
                 Prompt field
@@ -20,5 +22,9 @@
         </div>
     </div>
 
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0okXI-8d3yWn8_wR33GYPj01JTzRlewg&callback=initMap&v=weekly"
+      defer
+    ></script>
 </body>
 </html>
