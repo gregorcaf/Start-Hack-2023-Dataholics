@@ -22,4 +22,6 @@ def generate_all_endpoint_data(data):
 
 
 def get_all_end_locations(user_name, month, data):
-    return data[user_name][month]["features"]["all_end_locations"]
+    year = 2023
+    month_str = f"{year}_{month}"
+    return data[user_name][month_str]["features"]["all_end_locations"]
