@@ -1,6 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
-from src.feature_addition import load_data, get_name_from_data, get_co2_absolute_from_data, get_co2_average_from_data
+from src.feature_addition import load_data, get_co2_absolute_from_data, get_co2_average_from_data, \
+    get_friend_rank
 from pathlib import Path
 
 PROJECT_ROOT = (Path(__file__).parents[1])
@@ -24,14 +25,22 @@ def default():
 def calculate_carbon_footprint(month: str, name: str):
     # TODO: Add code to calculate carbon footprint and return response
     return {
-        "name": name,
+        "name": name.capitalize(),
         "co2_absolute": get_co2_absolute_from_data(data=app.state.data, name=name, month=month),
         "co2_average": get_co2_average_from_data(data=app.state.data, name=name, month=month),
-        "friend_rank": 2,
+        "friend_rank": get_friend_rank(data=app.state.data, name=name, month=month),
         "trip_destinations": 2,
         "co2_footprint_each_day": 3 ,
     }
-
+#
+# @app.get("/get-directions")
+# def directions(client, origin, destination,
+#                mode=None, waypoints=None, alternatives=False, avoid=None,
+#                language=None, units=None, region=None, departure_time=None,
+#                arrival_time=None, optimize_waypoints=False, transit_mode=None,
+#                transit_routing_preference=None, traffic_model=None):
+#
+#
 
 if __name__ == "__main__":
 
