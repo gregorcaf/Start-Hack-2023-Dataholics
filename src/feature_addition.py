@@ -44,6 +44,10 @@ def get_name_from_data(data: dict, name: str):
         Returns:
             str: the capitalized name.
         """
+    if name not in data:
+        print(f"Name {name} not found in the data dictionary.")
+        return ""
+
     return data[name].capitalize()
 
 

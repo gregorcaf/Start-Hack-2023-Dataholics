@@ -1,8 +1,5 @@
-import json
-
 import uvicorn
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, HTTPException
 
 from src.feature_addition import load_data, get_co2_absolute_from_data, get_co2_average_from_data,\
     get_co2_footprint_per_day, get_friend_rank, get_all_end_locations
@@ -13,20 +10,13 @@ DATA_FILE_PATH = PROJECT_ROOT/"data/prepared_trips/trip_data.json"
 
 app = FastAPI()
 
-origins = ["*"]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 
 @app.on_event("startup")
 async def startup_event():
-    app.state.data = load_data(DATA_FILE_PATH)
+    try:
+        app.state.data = load_data(DATA_FILE_PATH)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Failed to load data: {}".format(str(e)))
 
 
 @app.get("/")
@@ -38,15 +28,19 @@ def default():
 
 @app.get("/get-timeline-data")
 def calculate_carbon_footprint(month: str, name: str):
-    # TODO: Add code to calculate carbon footprint and return response
-    return json.dumps({
-        "name": name.capitalize(),
-        "co2_absolute": get_co2_absolute_from_data(data=app.state.data, name=name, month=month),
-        "co2_average": get_co2_average_from_data(data=app.state.data, name=name, month=month),
-        "friend_rank": get_friend_rank(data=app.state.data, name=name, month=month),
-        "trip_destinations": get_all_end_locations(data=app.state.data, name=name, month=month),
-        "co2_footprint_each_day": get_co2_footprint_per_day(data=app.state.data, user_name=name, month=month)
-    })
+    try:
+        return {
+            "name": name.capitalize(),
+            "co2_absolute": get_co2_absolute_from_data(data=app.state.data, name=name, month=month),
+            "co2_average": get_co2_average_from_data(data=app.state.data, name=name, month=month),
+            "friend_rank": get_friend_rank(data=app.state.data, name=name, month=month),
+            "trip_destinations": get_all_end_locations(data=app.state.data, name=name, month=month),
+            "co2_footprint_each_day": get_co2_footprint_per_day(data=app.state.data, user_name=name, month=month)
+        }
+    except KeyError:
+        raise HTTPException(status_code=404, detail="Data not found for the given user and month")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Failed to calculate carbon footprint: {}".format(str(e)))
 
 # @app.get("/get-directions")
 # def directions(client, origin, destination,
@@ -56,7 +50,6 @@ def calculate_carbon_footprint(month: str, name: str):
 #                transit_routing_preference=None, traffic_model=None):
 #
 #
-# TODO add knn nearest neighbour algorithm to find people who go to similar places at similar times
 
 
 if __name__ == "__main__":
