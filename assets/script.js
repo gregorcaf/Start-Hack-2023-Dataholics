@@ -27,10 +27,25 @@ function initMap() {
 
 }
 
+footPrintNumber = 5
+
 
 function initStatistics() {
-  document.getElementById("labelEcoFootprintNumber").innerHTML = "MARIBOR";
-  document.getElementById("labelEcoFootprintNumber").innerHTML = "METROPOLA";
+  // TODO => GET DATA FROM API
+
+
+  // change labels
+  
+
+  // if (footPrintNumber < 4) {
+  //   document.getElementById("labelEcoFootprintNumber").innerHTML += "<span class='badge text-bg-success'>";
+  // } else if (footPrintNumber < 6) {
+  //   document.getElementById("labelEcoFootprintNumber").innerHTML += "<span class='badge text-bg-warning'>";
+  // } else {
+  //   document.getElementById("labelEcoFootprintNumber").innerHTML += "<span class='badge text-bg-danger'>";
+  // }
+  // document.getElementById("labelEcoFootprintNumber").innerHTML += footPrintNumber + "</span>";
+
 }
 
 
@@ -43,3 +58,4 @@ let locations = [
 ]
 
 window.initMap = initMap;
+window.onload = initStatistics;
