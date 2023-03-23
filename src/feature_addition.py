@@ -105,14 +105,15 @@ def get_co2_footprint_per_day(user_name, month, data):
     month_map = {month_i.lower(): index for index, month_i in enumerate(calendar.month_name) if month_i}
     month_number = month_map[month.lower()]
     num_days_in_month = calendar.monthrange(year, month_number)[1]
-    days_co2_arr = {str(datetime.date(year, month_number, day)): 0 for day in range(1, num_days_in_month + 1)}
+    days_co2_dict = {str(datetime.date(year, month_number, day)): 0 for day in range(1, num_days_in_month + 1)}
 
     # for date, value in days_co2_arr:
     for trip in data[user_name][month_str]["raw"]:
         start_date = str(parser.parse(trip["start_time"]).date())
         # check not mandatory, but just for safety
-        if start_date in days_co2_arr:
-            days_co2_arr[str(start_date)] += calculate_co2_in_trip(trip)
+        if start_date in days_co2_dict:
+            days_co2_dict[str(start_date)] += calculate_co2_in_trip(trip)
 
-    data[user_name][month_str]["features"]["day_of_month_co2"] = days_co2_arr
-    return days_co2_arr
+    days_co2_dict = {k: round(v, 2) for k, v in days_co2_dict.items()}
+    data[user_name][month_str]["features"]["day_of_month_co2"] = days_co2_dict
+    return days_co2_dict
