@@ -1,4 +1,7 @@
+import json
+
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
 
 from src.feature_addition import load_data, get_co2_absolute_from_data, get_co2_average_from_data,\
@@ -9,6 +12,16 @@ PROJECT_ROOT = (Path(__file__).parents[1])
 DATA_FILE_PATH = PROJECT_ROOT/"data/prepared_trips/trip_data.json"
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.on_event("startup")
@@ -50,6 +63,7 @@ def calculate_carbon_footprint(month: str, name: str):
 #                transit_routing_preference=None, traffic_model=None):
 #
 #
+# TODO add knn nearest neighbour algorithm to find people who go to similar places at similar times
 
 
 if __name__ == "__main__":
