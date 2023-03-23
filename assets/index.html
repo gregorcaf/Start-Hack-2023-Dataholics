@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Google Maps</title>
+  <title>Dataholics Maps</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <script src="script.js"></script>
@@ -11,12 +11,27 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-8 min-vh-100" style="background-color: rgba(40, 40, 129, 0.1)">
-                Maps
-            </div>
             <div class="col-4 min-vh-100" style="background-color: rgba(65, 129, 40, 0.1)">
-                Prompt field
+                <form>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">From</label>
+                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="From">
+                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Password</label>
+                      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
+        </div>
+        <div class="col-8 min-vh-100" style="background-color: rgba(40, 40, 129, 0.1)">
+            Maps
         </div>
     </div>
 
