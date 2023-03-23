@@ -1,9 +1,8 @@
 import uvicorn
 from fastapi import FastAPI
+
 from src.feature_addition import load_data, get_co2_absolute_from_data, get_co2_average_from_data, \
-    get_friend_rank
-from src.feature_addition import load_data, get_name_from_data, get_co2_absolute_from_data, get_co2_average_from_data, \
-    generate_all_endpoint_data, get_co2_footprint_per_day
+    generate_all_endpoint_data, get_co2_footprint_per_day, get_friend_rank, get_all_end_locations
 from pathlib import Path
 
 PROJECT_ROOT = (Path(__file__).parents[1])
@@ -33,7 +32,7 @@ def calculate_carbon_footprint(month: str, name: str):
         "co2_absolute": get_co2_absolute_from_data(data=app.state.data, name=name, month=month),
         "co2_average": get_co2_average_from_data(data=app.state.data, name=name, month=month),
         "friend_rank": get_friend_rank(data=app.state.data, name=name, month=month),
-        "trip_destinations": generate_all_endpoint_data(data=app.state.data),
+        "trip_destinations": get_all_end_locations(data=app.state.data, name=name, month=month),
         "co2_footprint_each_day": get_co2_footprint_per_day(data=app.state.data, user_name=name, month=month)
     }
 #

@@ -1,6 +1,6 @@
+import calendar
 import json
 import datetime
-from copy import copy
 
 from dateutil import parser
 
@@ -77,8 +77,8 @@ def generate_all_endpoint_data(data):
 
 def get_all_end_locations(data:dict, name:str, month:str):
     year = 2023
-
     return data[name][f"{year}_{month}"]["features"]["all_end_locations"]
+
 
 def get_friend_rank(data:dict, name:str, month:str):
 
@@ -96,6 +96,8 @@ def get_friend_rank(data:dict, name:str, month:str):
             break
 
     return rank+1
+
+
 def get_co2_footprint_per_day(user_name, month, data):
     year = 2023
     month_str = f"{year}_{month}"
