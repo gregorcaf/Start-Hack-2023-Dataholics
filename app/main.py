@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI
 
 app = FastAPI()
@@ -22,7 +23,6 @@ def calculate_carbon_footprint(month: str):
 
 
 if __name__ == "__main__":
-
-    print("Hello World")
+    uvicorn.run(app)
 
 
