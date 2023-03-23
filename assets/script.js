@@ -33,60 +33,6 @@ function initMap() {
 }
 
 
-function getData() {
-    let data;
-
-    fetch(url).then(function (u) {
-            return u.json();
-        }
-    ).then(function (json) {
-            data = json;
-
-            let name = data["name"];
-            let rank = parseInt(data["friend_rank"].split(" / ")[0]);
-            let numPeople = parseInt(data["friend_rank"].split(" / ")[1]);
-            let totalEmissions = parseFloat(data["co2_absolute"]) / 1000;
-            let perTripConsumption = parseFloat(data["co2_average"]) / 1000;
-            let arrayDays = data["co2_footprint_each_day"];
-            let daysX = [];
-            let valuesY = [];
-
-            console.log("name ", name);
-            console.log("rank ", rank);
-            console.log("num people ", numPeople);
-            console.log("total emissions ", totalEmissions);
-            console.log("per trip consumptions ", perTripConsumption);
-            // console.log("array ", arrayDays)
-
-            for (var key in arrayDays) {
-                console.log(key + " -> " + arrayDays[key]);
-                daysX.push(key);
-                valuesY.push(arrayDays[key]);
-            }
-
-            var colors = [];
-            for (var i = 0; i < valuesY.length; i++) {
-                var red_value = Math.round((valuesY[i] / Math.max.apply(null, valuesY)) * 255);
-                var green_value = Math.round(((Math.max.apply(null, valuesY) - valuesY[i]) / Math.max.apply(null, valuesY)) * 255);
-                colors.push('rgb(' + red_value + ', ' + green_value + ', 0)');
-            }
-
-            let text_rank;
-            let text_per_trip;
-            let text_total_emissions;
-            let text_user_better_worse;
-            let value_user_better_worse = ((numPeople - rank) / numPeople) * 100
-
-            // rank
-            if (rank <= (numPeople / 3)) {
-                text_rank = "Munich area leaderboard: <span class=\"badge text-bg-success\">";
-            } else if (rank <= (numPeople - numPeople / 3)) {
-                text_rank = "Munich area leaderboard: <span class=\"badge text-bg-warning\">";
-            } else {
-                text_rank = "Munich area leaderboard: <span class=\"badge text-bg-danger\">";
-            }
-
-
 function calculateCo2(data) {
     // TODO: Change values
     co2_per_km = {
