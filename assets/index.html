@@ -10,60 +10,56 @@
 </head>
 <body>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-4 min-vh-100" style="background-color: rgba(255, 255, 255, 0.1)">
-                <div>
-                    <label id="labelEcoFootprintNumber">Your eco footprint is <span class="badge text-bg-success">4KG</span></label>
-                    <label id="labelMonthlyComparison">This month you did <span class="badge text-bg-success">better than 90%</span> of people in Munich area</label>
-                </div>
-                
-                <div>
-                    <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        Detailed statistics
-                    </button>
-                </div>
+  <div class="">
+    <div class="row no-gutters g-0">
 
-                <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-                        <label id="labelAreaLeaderboard">Munich area leaderboard: <span class="badge text-bg-success">3rd</span></label>
-                        <label id="labelPertripConsumption">Per trip consumption: <span class="badge text-bg-warning">420 grams</span></label>
-                        <label id="labelPertripConsumption">Total emissions: <span class="badge text-bg-warning">2 kg</span></label>
-                    </div>
-                </div>
-
-                <form>
-                    <div class="form-group">
-                      <!-- <label for="exampleInputEmail1">From</label> -->
-                      <input type="text" class="form-control" id="inputFrom" aria-describedby="emailHelp" placeholder="From">
-                      <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                    </div>
-                    <div class="form-group">
-                      <!-- <label for="exampleInputPassword1">Password</label> -->
-                      <input type="text" class="form-control" id="inputTo" placeholder="To">
-                    </div>
-                    <div class="form-check">
-                      <input type="checkbox" class="form-check-input" id="checkboxCarSharing">
-                      <label class="form-check-label" for="checkboxCarSharing">Car sharing</label>
-                    </div>
-
-                    <button type="submit" class="btn btn-secondary">Calculate route</button>
-                </form>
-            
-
-
-
-            </div>
-
-            <div class="col-8 min-vh-100" style="background-color: rgba(51, 51, 153, 0.1)">
-                Maps
-      <div class="">
-          <div class="row no-gutters g-0">
-              <div class="col-8 min-vh-100 p-0">
-                  <div class="min-vh-100 min-wh-100" id="map"></div>
-              </div>
-          </div>
+      <div class="col-8 min-vh-100" style="background-color: rgba(51, 51, 153, 0.1)">
+        <div class="min-vh-100 min-wh-100" id="map"></div>
       </div>
+
+      <div class="col-4 min-vh-100" style="background-color: rgba(255, 255, 255, 0.1)">
+        <div>
+          <label id="labelEcoFootprintNumber">Your eco footprint is <span class="badge text-bg-success">4KG</span></label>
+          <label id="labelMonthlyComparison">This month you did <span class="badge text-bg-success">better than 90%</span> of people in Munich area</label>
+        </div>
+              
+        <div>
+          <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Detailed statistics
+          </button>
+        </div>
+
+        <div class="collapse" id="collapseExample">
+          <div class="card card-body">
+            <label id="labelAreaLeaderboard">Munich area leaderboard: <span class="badge text-bg-success">3rd</span></label>
+            <label id="labelPertripConsumption">Per trip consumption: <span class="badge text-bg-warning">420 grams</span></label>
+            <label id="labelPertripConsumption">Total emissions: <span class="badge text-bg-warning">2 kg</span></label>
+          </div>
+        </div>
+
+        <form>
+          <div class="form-group">
+            <!-- <label for="exampleInputEmail1">From</label> -->
+            <input type="text" class="form-control" id="inputFrom" aria-describedby="emailHelp" placeholder="From">
+            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+          </div>
+
+          <div class="form-group">
+            <!-- <label for="exampleInputPassword1">Password</label> -->
+            <input type="text" class="form-control" id="inputTo" placeholder="To">
+          </div>
+
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="checkboxCarSharing">
+            <label class="form-check-label" for="checkboxCarSharing">Car sharing</label>
+          </div>
+
+          <button type="submit" class="btn btn-secondary">Calculate route</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
 <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0okXI-8d3yWn8_wR33GYPj01JTzRlewg&callback=initMap&v=weekly"
       defer
