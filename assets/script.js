@@ -1,4 +1,4 @@
-let url = "http://localhost:8000/get-timeline-data?name=gordan&month=february"
+let url = "http://" + window.location.host + "/get-timeline-data?name=gordan&month=february"
 let totalEmissionsLow = 70
 let totalEmissionsHigh = 90
 let perTripConsumptionLow = 1

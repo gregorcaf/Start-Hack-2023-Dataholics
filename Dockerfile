@@ -16,5 +16,8 @@ COPY . .
 # Expose the port that the application will run on
 EXPOSE 8000
 
+# Set the environment variable for the port
+ENV PORT=8000
+
 # Start the application with uvicorn when the container is run
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "$PORT"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "${PORT}"]
