@@ -138,7 +138,7 @@ function getData() {
                     pad: 4
                 },
                 autosize: false,
-                width: 300,
+                width: 600,
                 height: 300
             };
 
@@ -302,7 +302,7 @@ function createRoute() {
             let routes = document.getElementById('routes');
             routes.innerHTML = '';
 
-            let colors = ['green', 'yellow', 'orange', 'red']
+            let colors = ['green', '#FFCC00', '#FF7C00', 'red']
             let cos = calculateCo2(all_directios);
 
             const min_cos = cos[0];
@@ -366,20 +366,16 @@ function createRoute() {
                 }
 
                 let html_temp = `
-            <div class="row border-bottom border-top" style="background-color: white; border-radius: 5px;">
+                <div class="row border-bottom border-top p-4" style="background-color: white;">
                 <div class="col-2 d-flex flex-wrap align-items-center">
                     <img class="" src=${travel_img[i]} alt="">
                 </div>
                 <div class="col p-0"> </div>
                 <div class="col-3 p-0">
                     <div>
-                        <span>${start_time.toLocaleString('en-US', {
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true
-                })} - ${end_time.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', hour12: true})}</span>
+                        <span>${start_time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} - ${end_time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</span>
                     </div>
-                    <span class="text-secondary small">${mode_cur}</span>
+                    <span class="small" style="color: ${sorted_col[i]};">${mode_cur}</span>
                 </div>
                 <div class="col p-0"> </div>
                 <div class="col-2 p-0 d-flex flex-wrap align-items-center">
@@ -388,7 +384,7 @@ function createRoute() {
                 <div class="col p-0 "> </div>
                 <div class="col-2 p-0 d-flex flex-wrap align-items-center">
                     <div>
-                        <span>${Math.round(cos[i])} g CO2</span><br/>
+                        <span>${Math.round(cos[i])} g</span><br/>
                         <span class="${text_col}">${percent}</span>
                     </div>
                 </div>
