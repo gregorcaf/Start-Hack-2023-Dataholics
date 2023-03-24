@@ -6,3 +6,6 @@
 *.json
 *.ipynb_checkpoints
 
+#
+venv/
+

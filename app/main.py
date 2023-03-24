@@ -1,8 +1,10 @@
 import json
+import os
 
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
+from starlette.staticfiles import StaticFiles
 
 from src.feature_addition import load_data, get_co2_absolute_from_data, get_co2_average_from_data,\
     get_co2_footprint_per_day, get_friend_rank, get_all_end_locations
@@ -32,7 +34,11 @@ async def startup_event():
         raise HTTPException(status_code=500, detail="Failed to load data: {}".format(str(e)))
 
 
-@app.get("/")
+app.mount("/home", StaticFiles(directory=os.path.join(os.path.dirname(__file__), "./../assets"), html=True),
+          name="assets")
+
+
+@app.get("/info")
 def default():
     return {"Name": "Dataholics",
             "Mission": "Change the world, make it a sustainable place, for you and for me and the entire human race",
@@ -54,6 +60,7 @@ def calculate_carbon_footprint(month: str, name: str):
         raise HTTPException(status_code=404, detail="Data not found for the given user and month")
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to calculate carbon footprint: {}".format(str(e)))
+
 
 # @app.get("/get-directions")
 # def directions(client, origin, destination,
