@@ -34,15 +34,19 @@ async def startup_event():
         raise HTTPException(status_code=500, detail="Failed to load data: {}".format(str(e)))
 
 
-app.mount("/home", StaticFiles(directory=os.path.join(os.path.dirname(__file__), "./../assets"), html=True),
+print(PROJECT_ROOT/"assets")
+app.mount("/", StaticFiles(directory= PROJECT_ROOT/"assets", html=True),
           name="assets")
 
 
 @app.get("/info")
 def default():
+
     return {"Name": "Dataholics",
             "Mission": "Change the world, make it a sustainable place, for you and for me and the entire human race",
-            "Description": "Implement eco-friendly route API"}
+            "Description": "Implement eco-friendly route API",
+            "path": Path(os.path.dirname(__file__)).parents[1]/"assets",
+            }
 
 
 @app.get("/get-timeline-data")
