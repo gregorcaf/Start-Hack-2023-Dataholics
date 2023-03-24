@@ -35,7 +35,7 @@ function getData() {
 
 
             for (var key in arrayDays) {
-                console.log(key + " -> " + arrayDays[key]);
+                // console.log(key + " -> " + arrayDays[key]);
                 daysX.push(key);
                 valuesY.push(arrayDays[key]);
             }
@@ -148,8 +148,8 @@ function getData() {
                     y: valuesY,
                     type: 'bar',
                     marker: {
-                        color: colors,
-                        opacity: 0.66
+                        color: "#4CAF50",
+                        opacity: 0.66,
                     }
                 }
             ];
@@ -185,10 +185,10 @@ function initMap() {
         let marker, i;
         data = json;
         arrayLocations = data["trip_destinations"];
-        console.log(arrayLocations)
+        // console.log(arrayLocations)
 
         for (i = 0; i < arrayLocations.length; i++) {
-            console.log(arrayLocations[i][0], arrayLocations[i][1])
+            // console.log(arrayLocations[i][0], arrayLocations[i][1])
             marker = new google.maps.Marker({
                 position: new google.maps.LatLng(arrayLocations[i][0] / 10000000, arrayLocations[i][1] / 10000000),
                 map: map
@@ -366,7 +366,7 @@ function createRoute() {
                 }
 
                 let html_temp = `
-            <div class="row border-bottom border-top p-4">
+            <div class="row border-bottom border-top" style="background-color: white; border-radius: 5px;">
                 <div class="col-2 d-flex flex-wrap align-items-center">
                     <img class="" src=${travel_img[i]} alt="">
                 </div>
@@ -388,7 +388,7 @@ function createRoute() {
                 <div class="col p-0 "> </div>
                 <div class="col-2 p-0 d-flex flex-wrap align-items-center">
                     <div>
-                        <span>${Math.round(cos[i])} g</span><br/>
+                        <span>${Math.round(cos[i])} g CO2</span><br/>
                         <span class="${text_col}">${percent}</span>
                     </div>
                 </div>
