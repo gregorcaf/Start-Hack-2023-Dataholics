@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8000
 
 # Start the application with uvicorn when the container is run
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "$PORT"]
