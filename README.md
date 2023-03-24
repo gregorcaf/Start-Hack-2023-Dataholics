@@ -1,5 +1,7 @@
 # ReduceIt by Dataholics
 
+![alt text](assets/images/screenshot.png)
+
 Make your commutes eco-friendly with ReduceIt, 
 the app that tracks your carbon footprint and suggests low-emission routes. 
 Join the movement towards sustainable transportation and reduce your carbon emissions, 
@@ -15,4 +17,3 @@ To start the API:
 
 Or build the docker image and run it:   
 `docker build -t reduceit . && docker run -p 8000:8000 reduceit`
-
