@@ -13,6 +13,6 @@ Install the packages:
 To start the API:   
 `uvicorn app.main:app --reload`
 
-Or build the docker image and run it:
-TODO 
+Or build the docker image and run it:   
+`docker build -t reduceit . && docker run -p 8000:8000 reduceit`
 

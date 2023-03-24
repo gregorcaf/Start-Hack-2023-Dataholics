@@ -4,6 +4,7 @@ import os
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
+from starlette.responses import FileResponse
 from starlette.staticfiles import StaticFiles
 
 from src.feature_addition import load_data, get_co2_absolute_from_data, get_co2_average_from_data,\
@@ -41,8 +42,7 @@ def default():
 
     return {"Name": "Dataholics",
             "Mission": "Change the world, make it a sustainable place, for you and for me and the entire human race",
-            "Description": "Implement eco-friendly route API",
-            "path": Path(os.path.dirname(__file__)).parents[1]/"assets",
+            "Description": "Implement eco-friendly route API"
             }
 
 
@@ -62,6 +62,10 @@ def calculate_carbon_footprint(month: str, name: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to calculate carbon footprint: {}".format(str(e)))
 
+
+@app.get('/favicon.ico', include_in_schema=False)
+async def favicon():
+    return FileResponse(PROJECT_ROOT/"assets/images/favicon.ico")
 
 # @app.get("/get-directions")
 # def directions(client, origin, destination,
