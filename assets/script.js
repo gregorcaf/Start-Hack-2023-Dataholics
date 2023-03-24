@@ -37,7 +37,7 @@ function getData() {
             for (var key in arrayDays) {
                 // console.log(key + " -> " + arrayDays[key]);
                 daysX.push(key);
-                valuesY.push(arrayDays[key]);
+                valuesY.push((arrayDays[key] / 1000).toFixed(2));
             }
 
             // for (var key in arrayLocations) {
@@ -138,8 +138,13 @@ function getData() {
                     pad: 4
                 },
                 autosize: false,
-                width: 600,
-                height: 300
+                width: 450,
+                height: 300,
+                yaxis: {
+                    title: {
+                        text: 'kg of CO2'
+                    }
+                },
             };
 
             var dataChart = [
@@ -365,6 +370,14 @@ function createRoute() {
                     percent = `+${Math.abs(100 - percent)}%`;
                 }
 
+                let carbon;
+
+                if (cos[i] < 300) {
+                    carbon = Math.round(cos[i]) + " g"
+                } else {
+                    carbon = (cos[i] / 1000).toFixed(2) + " kg"
+                }
+
                 let html_temp = `
                 <div class="row border-bottom border-top p-4" style="background-color: white;">
                 <div class="col-2 d-flex flex-wrap align-items-center">
@@ -373,7 +386,11 @@ function createRoute() {
                 <div class="col p-0"> </div>
                 <div class="col-3 p-0">
                     <div>
-                        <span>${start_time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} - ${end_time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</span>
+                        <span>${start_time.toLocaleString('en-US', {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                })} - ${end_time.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', hour12: true})}</span>
                     </div>
                     <span class="small" style="color: ${sorted_col[i]};">${mode_cur}</span>
                 </div>
@@ -384,7 +401,7 @@ function createRoute() {
                 <div class="col p-0 "> </div>
                 <div class="col-2 p-0 d-flex flex-wrap align-items-center">
                     <div>
-                        <span>${Math.round(cos[i])} g</span><br/>
+                        <span>${carbon}</span><br/>
                         <span class="${text_col}">${percent}</span>
                     </div>
                 </div>
