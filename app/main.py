@@ -33,9 +33,7 @@ async def startup_event():
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to load data: {}".format(str(e)))
 
-
-print(PROJECT_ROOT/"assets")
-app.mount("/", StaticFiles(directory= PROJECT_ROOT/"assets", html=True),
+app.mount("/home", StaticFiles(directory=PROJECT_ROOT/"assets/", html=True),
           name="assets")
 
 
